@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+        
+# container for Rstudio
+  r:
+    env_file: .env
+    build:
+      args:    
+        - USER=${LOGIN_USER}
+        - PASSWORD=${RSTUDIO_PWD}
+      context: ./R
+      dockerfile: ./Dockerfile 
+    image: expors-innovation-study
+    volumes:
+      - "${PROJECT_DIR}:/home/${LOGIN_USER}/"    
+    expose:
+      - "8787" 
+    ports:
+      - "8787:8787"
+    command:
+        /usr/lib/rstudio-server/bin/rserver 
+            --server-daemonize=0
+        
